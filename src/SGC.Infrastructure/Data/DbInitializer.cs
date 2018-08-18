@@ -1,19 +1,26 @@
-﻿using SGC.ApplicationCore.Entity;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using SGC.ApplicationCore.Entity;
 using System.Linq;
 
 namespace SGC.Infrastructure.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(ClientContext context)
+        public static void Seed(IApplicationBuilder applicationBuilder)
         {
-            if (context.Clients.Any())
-            {
-                return;
-            }
+            using (var serviceScope = applicationBuilder.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
 
-            var clientes = new Client[]
+                .CreateScope())
             {
+                var context = serviceScope.ServiceProvider.GetService<ClientContext>();
+                if (context.Clients.Any())
+                {
+                    return;
+                }
+
+                var clientes = new Client[]
+                {
                 new Client {
                     Name = "Rahul Sen",
                     CPF = "76664173735"
@@ -23,12 +30,12 @@ namespace SGC.Infrastructure.Data
                     Name = "James Kamrune",
                     CPF = "54589486377"
                 }
-            };
+                };
 
-            context.AddRange(clientes);
+                context.AddRange(clientes);
 
-            var contatos = new Contact[]
-            {
+                var contatos = new Contact[]
+                {
                 new Contact {
                     Name = "Contact 1",
                     Telephone = "99999999",
@@ -42,11 +49,13 @@ namespace SGC.Infrastructure.Data
                     Email = "emailcontato2@teste.com",
                     Client = clientes[1]
                 }
-            };
+                };
 
-            context.AddRange(contatos);
+                context.AddRange(contatos);
 
-            context.SaveChanges();
+                context.SaveChanges();
+            }
+
 
         }
     }
