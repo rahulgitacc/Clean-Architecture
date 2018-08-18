@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SGC.Infrastructure.Data;
 
 namespace SGC.Infrastructure.Migrations
 {
     [DbContext(typeof(ClientContext))]
-    partial class ClientContextModelSnapshot : ModelSnapshot
+    [Migration("20180818144630_AddContactTable")]
+    partial class AddContactTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,13 +26,9 @@ namespace SGC.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CPF")
-                        .IsRequired()
-                        .HasColumnType("varchar(11)");
+                    b.Property<string>("CPF");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
+                    b.Property<string>("Name");
 
                     b.HasKey("ClientId");
 
@@ -45,16 +43,11 @@ namespace SGC.Infrastructure.Migrations
 
                     b.Property<int>("ClientId");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                    b.Property<string>("Email");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
+                    b.Property<string>("Name");
 
-                    b.Property<string>("Telephone")
-                        .HasColumnType("varchar(15)");
+                    b.Property<string>("Telephone");
 
                     b.HasKey("ContactId");
 
