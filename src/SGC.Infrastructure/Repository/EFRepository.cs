@@ -17,7 +17,7 @@ namespace SGC.Infrastructure.Repository
             this._dbContext = _dbContext;
         }
 
-        public TEntity Add(TEntity entity)
+        public virtual TEntity Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
@@ -45,10 +45,15 @@ namespace SGC.Infrastructure.Repository
             return _dbContext.Set<TEntity>().Where(predicate).AsEnumerable();
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
+
+        //public TEntity GetClientByPrefession(TEntity entity)
+        //{
+        //    //do something
+        //}
     }
 }
